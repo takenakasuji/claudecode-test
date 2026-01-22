@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SubscriptionData } from '../types';
 import { format } from 'date-fns';
 
@@ -8,6 +9,27 @@ interface RawDataModalProps {
 }
 
 export function RawDataModal({ data, isOpen, onClose }: RawDataModalProps) {
+  // モーダルが開いているときは背景のスクロールを無効にする
+  useEffect(() => {
+    if (isOpen) {
+      // 現在のスクロール位置を保存
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+
+      return () => {
+        // モーダルを閉じるときに元に戻す
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
