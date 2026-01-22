@@ -6,11 +6,11 @@ export function generateSubscriptionData(days: number = 90): SubscriptionData[] 
   const data: SubscriptionData[] = [];
   const today = startOfDay(new Date());
 
-  // ベースとなるメトリクス
-  let iOSMonthlyBase = 1200;
-  let iOSYearlyBase = 800;
-  let androidMonthlyBase = 900;
-  let androidYearlyBase = 600;
+  // ベースとなるメトリクス（ランダムに初期化）
+  let iOSMonthlyBase = 1000 + Math.floor(Math.random() * 400); // 1000-1400
+  let iOSYearlyBase = 600 + Math.floor(Math.random() * 400); // 600-1000
+  let androidMonthlyBase = 700 + Math.floor(Math.random() * 400); // 700-1100
+  let androidYearlyBase = 400 + Math.floor(Math.random() * 400); // 400-800
 
   for (let i = days - 1; i >= 0; i--) {
     const date = subDays(today, i);

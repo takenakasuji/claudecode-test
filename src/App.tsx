@@ -16,6 +16,7 @@ import {
   PlatformChart,
   PlanChart,
 } from './components/Charts';
+import { RawDataModal } from './components/RawDataModal';
 import { subDays, startOfDay } from 'date-fns';
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
     platform: 'All',
     planType: 'All',
   });
+
+  // 生データモーダルの表示状態
+  const [isRawDataModalOpen, setIsRawDataModalOpen] = useState(false);
 
   // フィルタリングされたデータ
   const filteredData = useMemo(
@@ -81,13 +85,21 @@ function App() {
     <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto">
         {/* ヘッダー */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            サブスクリプション分析ダッシュボード
-          </h1>
-          <p className="text-purple-100">
-            モバイルアプリのサブスクリプション契約状況をリアルタイムで可視化
-          </p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">
+              サブスクリプション分析ダッシュボード
+            </h1>
+            <p className="text-purple-100">
+              モバイルアプリのサブスクリプション契約状況をリアルタイムで可視化
+            </p>
+          </div>
+          <button
+            onClick={() => setIsRawDataModalOpen(true)}
+            className="px-6 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-colors font-medium shadow-lg"
+          >
+            📊 生データを表示
+          </button>
         </div>
 
         {/* フィルターパネル */}
@@ -200,6 +212,13 @@ function App() {
           <p>© 2026 Subscription Analytics Dashboard - All rights reserved</p>
         </div>
       </div>
+
+      {/* 生データモーダル */}
+      <RawDataModal
+        data={allData}
+        isOpen={isRawDataModalOpen}
+        onClose={() => setIsRawDataModalOpen(false)}
+      />
     </div>
   );
 }
