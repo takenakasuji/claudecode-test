@@ -1,6 +1,6 @@
 import React from 'react';
 import { FilterState, Platform, PlanType } from '../types';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 
 interface FilterPanelProps {
   filters: FilterState;
@@ -41,6 +41,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChang
           <input
             type="date"
             value={format(filters.startDate, 'yyyy-MM-dd')}
+            max={format(addDays(filters.endDate, -1), 'yyyy-MM-dd')}
             onChange={(e) => handleDateChange('startDate', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
@@ -53,6 +54,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, onFilterChang
           <input
             type="date"
             value={format(filters.endDate, 'yyyy-MM-dd')}
+            min={format(addDays(filters.startDate, 1), 'yyyy-MM-dd')}
             onChange={(e) => handleDateChange('endDate', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           />
